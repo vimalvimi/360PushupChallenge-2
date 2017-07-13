@@ -13,4 +13,6 @@
     <string name="delete_successful">Deleted Successfully</string>
     <string name="unknown_info">Unknown</string>
     <string name="extra_type_title">title</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

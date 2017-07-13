@@ -25,6 +25,8 @@ public class CounterActivity
 
     private static final String TAG = "CounterActivity";
 
+    public static final int PUSHUP_LOADER = 1;
+
     private String pushupLastPath;
 
     private int livePushupCounter = 0;
@@ -36,6 +38,8 @@ public class CounterActivity
     TextView counterButton;
     @BindView(R.id.counter_done_button)
     TextView doneButton;
+    @BindView(R.id.counter_record)
+    TextView record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +63,15 @@ public class CounterActivity
                 pushupCounter();
             }
         });
-
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setDoneButton();
             }
         });
+
+        //Kickoff Loader
+        getSupportLoaderManager().initLoader(PUSHUP_LOADER, null, this);
     }
 
     private void pushupCounter() {
@@ -101,7 +107,6 @@ public class CounterActivity
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         String[] projection = {
-                PushupContract.UNIVERSAL_ATTEMPT,
                 PushupContract.UNIVERSAL_SCORE};
 
         return new CursorLoader(this,
@@ -109,8 +114,7 @@ public class CounterActivity
                 projection,
                 null,
                 null,
-                null);
-
+                "score DESC");
     }
 
     @Override
@@ -119,16 +123,13 @@ public class CounterActivity
         if (data == null || data.getCount() < 1) {
             return;
         }
-
         if (data.moveToFirst()) {
-            String score = data.getString(1);
-            counterButton.setText(String.valueOf(score));
+            String score = data.getString(0);
+            record.setText(String.valueOf(String.valueOf(score)));
         }
-
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
     }
 }

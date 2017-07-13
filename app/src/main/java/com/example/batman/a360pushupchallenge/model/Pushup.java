@@ -13,23 +13,6 @@ public class Pushup {
         this.image = image;
         this.score = score;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setUri_path(String uri_path) {
-        this.uri_path = uri_path;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public String getName() {
         return name;
     }

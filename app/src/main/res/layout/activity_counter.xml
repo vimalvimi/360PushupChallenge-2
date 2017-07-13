@@ -15,7 +15,7 @@
         android:layout_marginRight="0dp"
         android:layout_marginTop="0dp"
         android:gravity="center"
-        android:textSize="42sp"
+        android:textSize="112sp"
         app:layout_constraintBottom_toTopOf="@+id/counter_done_button"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -47,4 +47,27 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1" />
+
+    <TextView
+        android:id="@+id/counter_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="8dp"
+        tools:text="122"
+        app:layout_constraintBottom_toTopOf="@+id/counter_done_button"
+        app:layout_constraintLeft_toRightOf="@+id/counter_record_image"
+        app:layout_constraintTop_toTopOf="@+id/counter_record_image"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/counter_record_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/counter_done_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:srcCompat="@android:drawable/star_big_on" />
 </android.support.constraint.ConstraintLayout>

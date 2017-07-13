@@ -21,7 +21,6 @@ public class PushupContract {
     public static final String PATH_PUSHUP_CLAPPING = "clapping";
     public static final String PATH_PUSHUP_ONE_ARMED = "one_armed";
 
-    public static final String UNIVERSAL_ATTEMPT = "attempt";
     public static final String UNIVERSAL_SCORE = "score";
 
     // To prevent someone from accidentally instantiating the contract class, an empty constructor.

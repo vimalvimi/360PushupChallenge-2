@@ -1,77 +1,85 @@
 package com.example.batman.a360pushupchallenge.ui;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.batman.a360pushupchallenge.R;
-import com.example.batman.a360pushupchallenge.adapter.PushupAdapter;
-import com.example.batman.a360pushupchallenge.model.Pushup;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MainActivity extends AppCompatActivity {
 
-public class MainActivity
-        extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
-
-    public static final int PUSHUP_LOADER = 0;
-
-    private List<Pushup> pushupList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private PushupAdapter pushupAdapter;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.pushup_list_recycler_view);
-        pushupAdapter = new PushupAdapter(pushupList, this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(1);
 
-        recyclerView.setAdapter(pushupAdapter);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
 
-        //Kickoff Loader
-        getSupportLoaderManager().initLoader(PUSHUP_LOADER, null, this);
-
-        preparePushup();
-    }
-
-    private void preparePushup() {
-        pushupList.add(new Pushup("Knee Push-up", "knee", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("Classic", "classic", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("Wide Grip", "wide_grip", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("Close Grip", "closed_grip", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("Stacked", "stacked", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("Raised Leg", "raised_leg", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("Reversed", "reversed", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("Decline", "decline", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("Incline", "incline", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("Knuckle", "knuckle", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("Clapping", "clapping", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("One Armed", "one_armed", R.drawable.knee_1, 0));
-        pushupAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
     }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    private class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new StatsFragment();
+                case 1:
+                    return new ListFragment();
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Stats";
+                case 1:
+                    return "Push It";
+            }
+            return null;
+        }
     }
 }

@@ -10,11 +10,11 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:scaleType="centerCrop"
             android:id="@+id/list_pushup_image"
             android:layout_width="@dimen/list_pushup_image_width"
             android:layout_height="@dimen/list_pushup_image_height"
-            android:contentDescription="@string/display_image_of_pushup_position" />
+            android:contentDescription="@string/display_image_of_pushup_position"
+            android:scaleType="centerCrop" />
 
     </LinearLayout>
 
@@ -27,6 +27,7 @@
 
         <TextView
             android:id="@+id/list_pushup_name"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Knee Pushup" />
