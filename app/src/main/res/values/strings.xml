@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">360 Pushup Challenge</string>
+    <string name="display_image_of_pushup_position">Display image of pushup position</string>
+    <string name="i_am_done">I AM DONE !!</string>
+    <string name="initial_text">0</string>
+    <string name="extra_type_pushup">pushupType</string>
+</resources>
