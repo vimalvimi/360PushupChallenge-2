@@ -53,11 +53,11 @@ public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHold
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, CounterActivity.class);
-                intent.putExtra(context.getString(R.string.extra_type_pushup), pushup.getUri_path());
+                intent.putExtra(context.getString(R.string.extra_last_path), pushup.getUri_path());
+                intent.putExtra(context.getString(R.string.extra_type_title), pushup.getName());
                 context.startActivity(intent);
             }
         });
-
     }
 
     @Override

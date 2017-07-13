@@ -3,7 +3,7 @@
     <string name="display_image_of_pushup_position">Display image of pushup position</string>
     <string name="i_am_done">I AM DONE !!</string>
     <string name="initial_text">0</string>
-    <string name="extra_type_pushup">pushupType</string>
+    <string name="extra_last_path">pushupType</string>
 
     //Insert_Update_Delete Warnings
     <string name="insert_successful">Record saved</string>
@@ -12,4 +12,5 @@
     <string name="update_failed">Update Failed</string>
     <string name="delete_successful">Deleted Successfully</string>
     <string name="unknown_info">Unknown</string>
+    <string name="extra_type_title">title</string>
 </resources>

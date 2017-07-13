@@ -25,7 +25,7 @@ public class CounterActivity
 
     private static final String TAG = "CounterActivity";
 
-    private String currentPushupType;
+    private String pushupLastPath;
 
     private int livePushupCounter = 0;
     private int highScore;
@@ -43,10 +43,12 @@ public class CounterActivity
         setContentView(R.layout.activity_counter);
         ButterKnife.bind(this);
 
-        if (getIntent().hasExtra(getString(R.string.extra_type_pushup))) {
-            currentPushupType = getIntent().getStringExtra(getString(R.string.extra_type_pushup));
-            currentUri = Uri.parse(PushupContract.BASE_CONTENT_URI + "/" + currentPushupType);
-            setTitle(currentPushupType);
+        if (getIntent().hasExtra(getString(R.string.extra_last_path)) &&
+                getIntent().hasExtra(getString(R.string.extra_type_title))) {
+
+            setTitle(getIntent().getStringExtra(getString(R.string.extra_type_title)));
+            pushupLastPath = getIntent().getStringExtra(getString(R.string.extra_last_path));
+            currentUri = Uri.parse(PushupContract.BASE_CONTENT_URI + "/" + pushupLastPath);
         }
 
         counterButton.setText(String.valueOf(livePushupCounter));

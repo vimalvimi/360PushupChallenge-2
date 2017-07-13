@@ -48,7 +48,7 @@ public class MainActivity
         pushupList.add(new Pushup("Knee Push-up", "knee", R.drawable.knee_1, 0));
         pushupList.add(new Pushup("Classic", "classic", R.drawable.knee_1, 0));
         pushupList.add(new Pushup("Wide Grip", "wide_grip", R.drawable.knee_1, 0));
-        pushupList.add(new Pushup("Close Grip", "close_grip", R.drawable.knee_1, 0));
+        pushupList.add(new Pushup("Close Grip", "closed_grip", R.drawable.knee_1, 0));
         pushupList.add(new Pushup("Stacked", "stacked", R.drawable.knee_1, 0));
         pushupList.add(new Pushup("Raised Leg", "raised_leg", R.drawable.knee_1, 0));
         pushupList.add(new Pushup("Reversed", "reversed", R.drawable.knee_1, 0));
