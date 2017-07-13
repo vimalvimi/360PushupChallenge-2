@@ -18,6 +18,10 @@
         <activity
             android:name=".ui.CounterActivity"
             android:parentActivityName=".ui.MainActivity" />
-    </application>
 
+        <provider
+            android:name=".data.PushupProvider"
+            android:authorities="com.example.batman.a360pushupchallenge"
+            android:exported="false"/>
+    </application>
 </manifest>

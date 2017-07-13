@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class PushupDbHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "pushup_records.db";
+    public static final String DATABASE_NAME = "records.db";
     private static final int DATABASE_VERSION = 2;
 
     public PushupDbHelper(Context context) {
@@ -19,13 +19,11 @@ public class PushupDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_KNEE_TABLE =
                 "CREATE TABLE " + PushupContract.PushupKnee.TABLE_NAME + " (" +
                         PushupContract.PushupKnee._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        PushupContract.PushupKnee.COLUMN_ATTEMPT + " INTEGER NOT NULL" +
                         PushupContract.PushupKnee.COLUMN_SCORE + " INTEGER NOT NULL);";
 
         final String SQL_CREATE_CLASSIC_TABLE =
                 "CREATE TABLE " + PushupContract.PushupClassic.TABLE_NAME + " (" +
                         PushupContract.PushupClassic._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        PushupContract.PushupClassic.COLUMN_ATTEMPT + " INTEGER NOT NULL" +
                         PushupContract.PushupClassic.COLUMN_SCORE + " INTEGER NOT NULL);";
 
         sqLiteDatabase.execSQL(SQL_CREATE_KNEE_TABLE);

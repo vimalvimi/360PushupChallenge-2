@@ -4,16 +4,18 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
 public class PushupProvider extends ContentProvider {
 
+    public PushupDbHelper mPushupDbHelper;
+
     public static final int CODE_KNEE = 100;
     public static final int CODE_CLASSIC = 200;
 
     public static final UriMatcher URI_MATCHER = uriMatch();
-    public PushupDbHelper mPushupDbHelper;
 
     private static UriMatcher uriMatch() {
         final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -30,7 +32,6 @@ public class PushupProvider extends ContentProvider {
         mPushupDbHelper = new PushupDbHelper(getContext());
         return true;
     }
-
 
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection,
@@ -76,7 +77,29 @@ public class PushupProvider extends ContentProvider {
 
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues contentValues) {
-        return null;
+
+        final int match = URI_MATCHER.match(uri);
+
+        SQLiteDatabase sqlDb;
+        long id = 0;
+
+        switch (match) {
+            case CODE_KNEE: {
+                sqlDb = mPushupDbHelper.getWritableDatabase();
+                id = sqlDb.insert(PushupContract.PushupKnee.TABLE_NAME, null, contentValues);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return Uri.parse(PushupContract.PushupKnee.CONTENT_URI + "/" + id + "/");
+            }
+            case CODE_CLASSIC: {
+                sqlDb = mPushupDbHelper.getWritableDatabase();
+                id = sqlDb.insert(PushupContract.PushupClassic.TABLE_NAME, null, contentValues);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return Uri.parse(PushupContract.PushupClassic.CONTENT_URI + "/" + id + "/");
+            }
+            default:
+                throw new IllegalStateException("Insertion is not supported for " + uri);
+        }
+
     }
 
     @Override
@@ -87,5 +110,6 @@ public class PushupProvider extends ContentProvider {
     @Override
     public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
         return 0;
+
     }
 }

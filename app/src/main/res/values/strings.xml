@@ -4,4 +4,12 @@
     <string name="i_am_done">I AM DONE !!</string>
     <string name="initial_text">0</string>
     <string name="extra_type_pushup">pushupType</string>
+
+    //Insert_Update_Delete Warnings
+    <string name="insert_successful">Record saved</string>
+    <string name="insert_failed">Error with saving Record</string>
+    <string name="update_successful">Update Successful</string>
+    <string name="update_failed">Update Failed</string>
+    <string name="delete_successful">Deleted Successfully</string>
+    <string name="unknown_info">Unknown</string>
 </resources>
