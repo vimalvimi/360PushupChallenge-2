@@ -1,6 +1,7 @@
 package com.example.batman.a360pushupchallenge.ui;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.batman.a360pushupchallenge.R;
 import com.example.batman.a360pushupchallenge.data.PushupContract;
+import com.example.batman.a360pushupchallenge.helper.PushupList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,16 +32,21 @@ public class CounterActivity
     public static final int PUSHUP_LOADER = 601;
 
     private String pushupLastPath;
+    private String pushupName;
 
     private int livePushupCounter = 0;
+    private int recordInt = 0;
     private Uri currentUri;
 
     private MediaPlayer mediaPlayer;
     private MediaPlayer mediaPlayer10;
 
-    @BindView(R.id.counter_count_button)
+    PushupList pushupList;
 
+    @BindView(R.id.counter_count_button)
     TextView counterButton;
+    @BindView(R.id.counter_togo_text)
+    TextView counterTogo;
     @BindView(R.id.counter_done_button)
     TextView doneButton;
     @BindView(R.id.counter_record)
@@ -53,25 +60,31 @@ public class CounterActivity
         setContentView(R.layout.activity_counter);
         ButterKnife.bind(this);
 
+        pushupList = new PushupList();
+
+        if (getIntent().hasExtra(getString(R.string.extra_last_path))) {
+            pushupLastPath = getIntent().getStringExtra(getString(R.string.extra_last_path));
+            currentUri = Uri.parse(PushupContract.BASE_CONTENT_URI + "/" + pushupLastPath);
+        }
+
+        pushupName = (pushupList.getNameFromUri(pushupLastPath));
+        setTitle(pushupName);
+
         String customFont = "Teko-Medium.ttf";
         Typeface typeface = Typeface.createFromAsset(getAssets(), customFont);
 
+        //Get Generator
+        pushupList = new PushupList();
+
         //Ting sound effect for touch
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.adapter_clink);
-        mediaPlayer10 = MediaPlayer.create(getApplicationContext(), R.raw.adapter_clink_10);
+        mediaPlayer = MediaPlayer.create(this, R.raw.adapter_clink);
+        mediaPlayer10 = MediaPlayer.create(this, R.raw.adapter_clink_10);
 
         counterButton.setTypeface(typeface);
         doneButton.setTypeface(typeface);
         record.setTypeface(typeface);
         personalRecord.setTypeface(typeface);
-
-        if (getIntent().hasExtra(getString(R.string.extra_last_path)) &&
-                getIntent().hasExtra(getString(R.string.extra_type_title))) {
-
-            setTitle(getIntent().getStringExtra(getString(R.string.extra_type_title)));
-            pushupLastPath = getIntent().getStringExtra(getString(R.string.extra_last_path));
-            currentUri = Uri.parse(PushupContract.BASE_CONTENT_URI + "/" + pushupLastPath);
-        }
+        counterTogo.setTypeface(typeface);
 
         counterButton.setText(String.valueOf(livePushupCounter));
 
@@ -98,14 +111,32 @@ public class CounterActivity
 
         //If it hits multiple of 10 then sound 2
         if (livePushupCounter % 10 == 0) {
-            mediaPlayer10.start();
+            if (mediaPlayer10 != null) {
+                mediaPlayer10.start();
+            }
         } else {
-            mediaPlayer.start();
+            if (mediaPlayer != null) {
+                mediaPlayer.start();
+            }
+        }
+
+        //Push that record
+        if (recordInt > 0) {
+            if (0 <= (recordInt - livePushupCounter) && (recordInt - livePushupCounter) <= 5) {
+                String motivationText = (recordInt + 1) - livePushupCounter + " more to break the record";
+                counterTogo.setVisibility(View.VISIBLE);
+                counterTogo.setText(motivationText);
+            } else if (recordInt < livePushupCounter) {
+                String motivationText = "Congrats, Your broke your own record !";
+                counterTogo.setVisibility(View.VISIBLE);
+                counterTogo.setText(motivationText);
+            } else {
+                counterTogo.setVisibility(View.GONE);
+            }
         }
     }
 
     private void setDoneButton() {
-
         if (livePushupCounter > 0) {
             //Getting Score
             Integer currentScore = livePushupCounter;
@@ -126,6 +157,7 @@ public class CounterActivity
                 // Otherwise, the insertion was successful and we can display a toast.
                 Toast.makeText(this, getString(R.string.insert_successful),
                         Toast.LENGTH_SHORT).show();
+                ProgressShare();
                 finish();
             }
         } else {
@@ -155,7 +187,8 @@ public class CounterActivity
         }
         if (data.moveToFirst()) {
             String score = data.getString(0);
-            record.setText(String.valueOf(String.valueOf(score)));
+            record.setText(String.valueOf(score));
+            recordInt = Integer.parseInt(score);
         }
     }
 
@@ -164,9 +197,34 @@ public class CounterActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mediaPlayer = MediaPlayer.create(this, R.raw.adapter_clink);
+        mediaPlayer10 = MediaPlayer.create(this, R.raw.adapter_clink_10);
+    }
+    @Override
     protected void onPause() {
-        super.onPause();
+        mediaPlayer.stop();
+        mediaPlayer10.stop();
         mediaPlayer.release();
         mediaPlayer10.release();
+        super.onPause();
     }
+
+    private void ProgressShare() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT,
+                "Hi, I just did " + livePushupCounter + " " + pushupName +
+                        " Push ups, \n #360PushupChallenge");
+
+        try {
+            startActivity(Intent.createChooser(shareIntent,
+                    "Hi, I just did " + livePushupCounter + " " + pushupName +
+                            " Push ups, \n #360PushupChallenge"));
+        } catch (android.content.ActivityNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }

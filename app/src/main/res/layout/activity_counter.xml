@@ -19,6 +19,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -65,5 +66,21 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@+id/counter_done_button"
         app:layout_constraintLeft_toLeftOf="parent"
+        tools:text="Personal Record" />
+
+    <TextView
+        android:id="@+id/counter_togo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/counter_done_button"
+        app:layout_constraintLeft_toLeftOf="@+id/counter_count_button"
+        app:layout_constraintRight_toRightOf="@+id/counter_count_button"
+        app:layout_constraintTop_toTopOf="@+id/counter_count_button"
+        app:layout_constraintVertical_bias="0.75"
         tools:text="Personal Record" />
 </android.support.constraint.ConstraintLayout>

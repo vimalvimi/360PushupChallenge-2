@@ -1,10 +1,8 @@
 package com.example.batman.a360pushupchallenge.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +12,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.batman.a360pushupchallenge.R;
 import com.example.batman.a360pushupchallenge.model.Pushup;
-import com.example.batman.a360pushupchallenge.ui.CounterActivity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHolder> {
+public class PushupAdapterWidget extends RecyclerView.Adapter<PushupAdapterWidget.MyViewHolder> {
 
     private static final String TAG = "PushupAdapter";
 
@@ -31,9 +28,12 @@ public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHold
     private String customFont = "Teko-Medium.ttf";
     private Typeface typeface;
 
-    public PushupAdapter(List<Pushup> pushupList, Context context) {
+    private ClickListener mClickListener;
+
+    public PushupAdapterWidget(List<Pushup> pushupList, Context context, ClickListener clickListener) {
         this.pushupList = pushupList;
         this.context = context;
+        mClickListener = clickListener;
     }
 
     @Override
@@ -45,33 +45,18 @@ public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position) {
         final Pushup pushup = pushupList.get(position);
 
         typeface = Typeface.createFromAsset(context.getAssets(), customFont);
+
         holder.name.setTypeface(typeface);
-//        holder.score.setTypeface(typeface);
 
         Glide.with(context)
                 .load(pushup.getImage())
                 .into(holder.image);
+
         holder.name.setText(pushup.getName());
-//        holder.score.setText(String.valueOf(pushup.getScore()));
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(context, CounterActivity.class);
-                intent.putExtra(context.getString(R.string.extra_last_path), pushup.getUri_path());
-                intent.putExtra(context.getString(R.string.extra_type_title), pushup.getName());
-
-                Log.d(TAG, "onClick: URI PATH :"+ pushup.getUri_path());
-                Log.d(TAG, "onClick: NAME : " + pushup.getName());
-
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -79,18 +64,28 @@ public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHold
         return pushupList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.list_pushup_image)
         ImageView image;
         @BindView(R.id.list_pushup_name)
         TextView name;
-//        @BindView(R.id.list_pushup_score)
-//        TextView score;
 
         MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null) {
+                mClickListener.itemClicked(view, getAdapterPosition());
+            }
+        }
+    }
+
+    public interface ClickListener {
+        void itemClicked(View view, int position);
     }
 }

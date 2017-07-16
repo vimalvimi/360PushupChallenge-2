@@ -6,28 +6,44 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/ActionDark">
-
-        <activity
-            android:name=".ui.CounterActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".ui.MainActivity" />
-
         <provider
             android:name=".data.PushupProvider"
             android:authorities="com.example.batman.a360pushupchallenge"
             android:exported="false" />
+
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <activity
+            android:name=".ui.CounterActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme"/>
+
+        <receiver android:name=".widget.PushupQuickWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/pushup_quick_widget_info" />
+        </receiver>
+
+        <activity android:name=".widget.PushupQuickWidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>

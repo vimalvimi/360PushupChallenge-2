@@ -15,6 +15,7 @@ public class PushupDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
         final String SQL_CREATE_KNEE_TABLE =
                 "CREATE TABLE " + PushupContract.PushupKnee.TABLE_NAME + " (" +
                         PushupContract.PushupKnee._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
