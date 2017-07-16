@@ -28,7 +28,7 @@
         <activity
             android:name=".ui.CounterActivity"
             android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <receiver android:name=".widget.PushupQuickWidget">
             <intent-filter>
@@ -45,5 +45,8 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity" />
     </application>
 </manifest>

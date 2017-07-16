@@ -54,11 +54,15 @@ public class CounterActivity
     @BindView(R.id.personal_record)
     TextView personalRecord;
 
+    View parentLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter);
         ButterKnife.bind(this);
+
+        parentLayout = findViewById(android.R.id.content);
 
         pushupList = new PushupList();
 
@@ -151,15 +155,19 @@ public class CounterActivity
             Log.d(TAG, "onCreate: NEW URI" + newUri);
             if (newUri == null) {
                 // If the new content URI is null, then there was an error with insertion.
-                Toast.makeText(this, getString(R.string.insert_failed),
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.insert_failed), Toast.LENGTH_SHORT).show();
+
             } else {
                 // Otherwise, the insertion was successful and we can display a toast.
-                Toast.makeText(this, getString(R.string.insert_successful),
-                        Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.insert_successful), Toast.LENGTH_SHORT).show();
+
                 ProgressShare();
                 finish();
             }
+
         } else {
             finish();
         }
@@ -202,6 +210,7 @@ public class CounterActivity
         mediaPlayer = MediaPlayer.create(this, R.raw.adapter_clink);
         mediaPlayer10 = MediaPlayer.create(this, R.raw.adapter_clink_10);
     }
+
     @Override
     protected void onPause() {
         mediaPlayer.stop();

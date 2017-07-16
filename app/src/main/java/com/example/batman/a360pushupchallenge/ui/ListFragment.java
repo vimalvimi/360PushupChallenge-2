@@ -14,16 +14,20 @@ import com.example.batman.a360pushupchallenge.R;
 import com.example.batman.a360pushupchallenge.adapter.PushupAdapter;
 import com.example.batman.a360pushupchallenge.helper.PushupList;
 import com.example.batman.a360pushupchallenge.model.Pushup;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 
-public class ListFragment extends Fragment{
+public class ListFragment extends Fragment {
 
     public static final int LIST_STATS_LOADER = 601;
 
     private ArrayList<Pushup> pushupList = new ArrayList<>();
     private PushupAdapter pushupAdapter;
     private PushupList mPushupList;
+
+    private AdView adView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,10 +51,13 @@ public class ListFragment extends Fragment{
         mPushupList.preparePushup(pushupList);
 
         pushupAdapter.notifyDataSetChanged();
+
+        adView = (AdView) rootView.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
         return rootView;
     }
-
-
 
 
 }
