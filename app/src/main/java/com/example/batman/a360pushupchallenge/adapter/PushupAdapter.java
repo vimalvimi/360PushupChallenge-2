@@ -2,6 +2,7 @@ package com.example.batman.a360pushupchallenge.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,10 @@ public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHold
     private static final String TAG = "PushupAdapter";
 
     private List<Pushup> pushupList;
-    Context context;
+    private Context context;
+
+    private String customFont = "Teko-Medium.ttf";
+    private Typeface typeface;
 
     public PushupAdapter(List<Pushup> pushupList, Context context) {
         this.pushupList = pushupList;
@@ -42,11 +46,16 @@ public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHold
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final Pushup pushup = pushupList.get(position);
+
+        typeface = Typeface.createFromAsset(context.getAssets(), customFont);
+        holder.name.setTypeface(typeface);
+//        holder.score.setTypeface(typeface);
+
         Glide.with(context)
                 .load(pushup.getImage())
                 .into(holder.image);
         holder.name.setText(pushup.getName());
-        holder.score.setText(String.valueOf(pushup.getScore()));
+//        holder.score.setText(String.valueOf(pushup.getScore()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,8 +80,8 @@ public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHold
         ImageView image;
         @BindView(R.id.list_pushup_name)
         TextView name;
-        @BindView(R.id.list_pushup_score)
-        TextView score;
+//        @BindView(R.id.list_pushup_score)
+//        TextView score;
 
         MyViewHolder(View itemView) {
             super(itemView);

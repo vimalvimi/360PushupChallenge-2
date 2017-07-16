@@ -8,6 +8,19 @@ public class PushupContract {
     public static final String CONTENT_AUTHORITY = "com.example.batman.a360pushupchallenge";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
+    public static final String NAME_PUSHUP_KNEE = "Knee Push-up";
+    public static final String NAME_PUSHUP_CLASSIC = "Classic";
+    public static final String NAME_PUSHUP_WIDE_GRIP = "Wide Grip";
+    public static final String NAME_PUSHUP_CLOSED_GRIP = "Close Grip";
+    public static final String NAME_PUSHUP_STACKED = "Stacked";
+    public static final String NAME_PUSHUP_RAISED_LEG = "Raised Leg";
+    public static final String NAME_PUSHUP_REVERSED = "Reversed";
+    public static final String NAME_PUSHUP_DECLINE = "Decline";
+    public static final String NAME_PUSHUP_INCLINE = "Incline";
+    public static final String NAME_PUSHUP_KNUCKLE = "Knuckle";
+    public static final String NAME_PUSHUP_CLAPPING = "Clapping";
+    public static final String NAME_PUSHUP_ONE_ARMED = "One Armed";
+
     public static final String PATH_PUSHUP_KNEE = "knee";
     public static final String PATH_PUSHUP_CLASSIC = "classic";
     public static final String PATH_PUSHUP_WIDE_GRIP = "wide_grip";
@@ -21,6 +34,7 @@ public class PushupContract {
     public static final String PATH_PUSHUP_CLAPPING = "clapping";
     public static final String PATH_PUSHUP_ONE_ARMED = "one_armed";
 
+    public static final String UNIVERSAL_ID = BaseColumns._ID;
     public static final String UNIVERSAL_SCORE = "score";
 
     // To prevent someone from accidentally instantiating the contract class, an empty constructor.

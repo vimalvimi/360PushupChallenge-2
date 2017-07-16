@@ -15,4 +15,35 @@
     <string name="extra_type_title">title</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    //Pushup Types
+    <string name="name_knee_pushup">Knee Push-up</string>
+    <string name="name_classic">Classic</string>
+    <string name="name_wide_grip">Wide Grip</string>
+    <string name="name_close_grip">Close Grip</string>
+    <string name="name_stacked">Stacked</string>
+    <string name="name_raised_leg">Raised Leg</string>
+    <string name="name_reversed">Reversed</string>
+    <string name="name_decline">Decline</string>
+    <string name="name_incline">Incline</string>
+    <string name="name_knuckle">Knuckle</string>
+    <string name="name_clapping">Clapping</string>
+    <string name="name_one_armed">One Armed</string>
+
+    //Pushup LastPath
+    <string name="last_path_knee_pushup">knee</string>
+    <string name="last_path_classic">classic</string>
+    <string name="last_path_wide_grip">wide_grip</string>
+    <string name="last_path_closed_grip">closed_grip</string>
+    <string name="last_path_stacked">stacked</string>
+    <string name="last_path_raised_leg">raised_leg</string>
+    <string name="last_path_reversed">reversed</string>
+    <string name="last_path_decline">decline</string>
+    <string name="last_path_incline">incline</string>
+    <string name="last_path_knuckle">knuckle</string>
+    <string name="last_path_clapping">clapping</string>
+    <string name="last_path_one_armed">one_armed</string>
+    <string name="personal_record">Personal Record</string>
+    <string name="attempt">Attempt</string>
+    <string name="initial_zero">0</string>
 </resources>
