@@ -16,7 +16,6 @@
             android:layout_height="@dimen/list_pushup_image_height"
             android:contentDescription="@string/display_image_of_pushup_position"
             android:scaleType="centerCrop" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -34,12 +33,5 @@
             android:textSize="34sp"
             android:textColor="@color/colorPrimary"
             tools:text="Knee Pushup" />
-
-        <!--<TextView-->
-            <!--android:id="@+id/list_pushup_score"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textColor="@color/colorPrimary"-->
-            <!--tools:text="Record : 250" />-->
     </LinearLayout>
 </LinearLayout>

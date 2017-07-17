@@ -20,8 +20,6 @@ import butterknife.ButterKnife;
 
 public class PushupAdapterWidget extends RecyclerView.Adapter<PushupAdapterWidget.MyViewHolder> {
 
-    private static final String TAG = "PushupAdapter";
-
     private List<Pushup> pushupList;
     private Context context;
 

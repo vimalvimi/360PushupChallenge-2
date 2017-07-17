@@ -23,8 +23,6 @@ import butterknife.ButterKnife;
 
 public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHolder> {
 
-    private static final String TAG = "PushupAdapter";
-
     private List<Pushup> pushupList;
     private Context context;
 
@@ -50,13 +48,11 @@ public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHold
 
         typeface = Typeface.createFromAsset(context.getAssets(), customFont);
         holder.name.setTypeface(typeface);
-//        holder.score.setTypeface(typeface);
 
         Glide.with(context)
                 .load(pushup.getImage())
                 .into(holder.image);
         holder.name.setText(pushup.getName());
-//        holder.score.setText(String.valueOf(pushup.getScore()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,10 +61,6 @@ public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHold
                 Intent intent = new Intent(context, CounterActivity.class);
                 intent.putExtra(context.getString(R.string.extra_last_path), pushup.getUri_path());
                 intent.putExtra(context.getString(R.string.extra_type_title), pushup.getName());
-
-                Log.d(TAG, "onClick: URI PATH :"+ pushup.getUri_path());
-                Log.d(TAG, "onClick: NAME : " + pushup.getName());
-
                 context.startActivity(intent);
             }
         });
@@ -85,8 +77,6 @@ public class PushupAdapter extends RecyclerView.Adapter<PushupAdapter.MyViewHold
         ImageView image;
         @BindView(R.id.list_pushup_name)
         TextView name;
-//        @BindView(R.id.list_pushup_score)
-//        TextView score;
 
         MyViewHolder(View itemView) {
             super(itemView);

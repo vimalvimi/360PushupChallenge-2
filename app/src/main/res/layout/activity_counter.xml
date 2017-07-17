@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -46,13 +47,13 @@
         android:id="@+id/counter_record"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginBottom="-1dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="8dp"
         android:text="@string/initial_zero"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/personal_record"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="-1dp" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/personal_record"

@@ -235,5 +235,4 @@ public class CounterActivity
             ex.printStackTrace();
         }
     }
-
 }
