@@ -14,11 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.batman.a360pushupchallenge.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void appShare() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Hi check this awesome app #360PushupChallenge" );
+        shareIntent.setType(getString(R.string.text_type_intent_share));
+        shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_intent_text));
 
         try {
-            startActivity(Intent.createChooser(shareIntent, "Share about app"));
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_intent_temp_text)));
         } catch (android.content.ActivityNotFoundException ex) {
             ex.printStackTrace();
         }
@@ -94,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Stats";
+                    return getString(R.string.tab_title_stats);
                 case 1:
-                    return "Push It";
+                    return getString(R.string.tab_title_push);
             }
             return null;
         }

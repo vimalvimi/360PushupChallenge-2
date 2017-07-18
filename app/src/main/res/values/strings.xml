@@ -52,4 +52,18 @@
     <string name="break_your_record">BREAK YOUR RECORD</string>
     <string name="widget_title_text">widget_title_text</string>
     <string name="ad_demo">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="saved_counter_value">savedCounterValue</string>
+    <string name="text_type_intent_share">text/plain</string>
+    <string name="share_intent_text">Hi check this awesome app #360PushupChallenge</string>
+    <string name="share_intent_temp_text">Share about app</string>
+    <string name="tab_title_stats">Stats</string>
+    <string name="record_broke_text">Congrats, Your broke your own record !</string>
+    <string name="record_broke_pre_text">more to break the record</string>
+    <string name="tab_title_push">Push It</string>
+    <string name="app_tag">Push ups,   #360PushupChallenge</string>
+    <string name="share_text_prefix">Hi, I just did</string>
+    <string name="push_up">Push ups,</string>
+    <string name="project">Projects</string>
+    <string name="saved_random_quote_value">saved_random_quote_value</string>
+    <string name="dropdown_arrow">dropdown_arrow</string>
 </resources>

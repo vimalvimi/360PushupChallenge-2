@@ -11,7 +11,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,8 +25,6 @@ import butterknife.ButterKnife;
 public class CounterActivity
         extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
-
-    private static final String TAG = "CounterActivity";
 
     public static final int PUSHUP_LOADER = 601;
 
@@ -57,10 +54,21 @@ public class CounterActivity
     View parentLayout;
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        int liveCounter = livePushupCounter;
+        outState.putInt(getString(R.string.saved_counter_value), liveCounter);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter);
         ButterKnife.bind(this);
+
+        if (savedInstanceState != null) {
+            livePushupCounter = savedInstanceState.getInt(getString(R.string.saved_counter_value));
+        }
 
         parentLayout = findViewById(android.R.id.content);
 
@@ -127,11 +135,11 @@ public class CounterActivity
         //Push that record
         if (recordInt > 0) {
             if (0 <= (recordInt - livePushupCounter) && (recordInt - livePushupCounter) <= 5) {
-                String motivationText = (recordInt + 1) - livePushupCounter + " more to break the record";
+                String motivationText = (recordInt + 1) - livePushupCounter + getString(R.string.record_broke_pre_text);
                 counterTogo.setVisibility(View.VISIBLE);
                 counterTogo.setText(motivationText);
             } else if (recordInt < livePushupCounter) {
-                String motivationText = "Congrats, Your broke your own record !";
+                String motivationText = getString(R.string.record_broke_text);
                 counterTogo.setVisibility(View.VISIBLE);
                 counterTogo.setText(motivationText);
             } else {
@@ -152,7 +160,6 @@ public class CounterActivity
             // Show a toast message depending on whether or not the insertion was successful
             Uri newUri = getContentResolver().insert(currentUri, values);
 
-            Log.d(TAG, "onCreate: NEW URI" + newUri);
             if (newUri == null) {
                 // If the new content URI is null, then there was an error with insertion.
                 Toast.makeText(getApplicationContext(),
@@ -222,15 +229,15 @@ public class CounterActivity
 
     private void ProgressShare() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
+        shareIntent.setType(getString(R.string.text_type_intent_share));
         shareIntent.putExtra(Intent.EXTRA_TEXT,
-                "Hi, I just did " + livePushupCounter + " " + pushupName +
-                        " Push ups, \n #360PushupChallenge");
+                getString(R.string.share_text_prefix) + livePushupCounter + " " + pushupName +
+                        getString(R.string.app_tag));
 
         try {
             startActivity(Intent.createChooser(shareIntent,
-                    "Hi, I just did " + livePushupCounter + " " + pushupName +
-                            " Push ups, \n #360PushupChallenge"));
+                    getString(R.string.share_text_prefix) + livePushupCounter + " " + pushupName +
+                            getString(R.string.push_up) + getString(R.string.app_tag)));
         } catch (android.content.ActivityNotFoundException ex) {
             ex.printStackTrace();
         }

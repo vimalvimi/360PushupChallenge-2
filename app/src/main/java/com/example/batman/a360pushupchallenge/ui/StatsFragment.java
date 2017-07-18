@@ -1,8 +1,11 @@
 package com.example.batman.a360pushupchallenge.ui;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +26,8 @@ import com.example.batman.a360pushupchallenge.R;
 import com.example.batman.a360pushupchallenge.data.PushupContract;
 import com.example.batman.a360pushupchallenge.helper.PushupList;
 import com.example.batman.a360pushupchallenge.model.PushUpStats;
+import com.example.batman.a360pushupchallenge.model.PushupQuote;
+import com.example.batman.a360pushupchallenge.remote.QuoteAPI;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -33,15 +38,19 @@ import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class StatsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final String TAG = "StatsFragment";
-
     private static final int STATS_LOADER_ID = 501;
+
+    private static final String TAG = "StatsFragment";
 
     List<PushUpStats> currentScore;
 
@@ -49,6 +58,9 @@ public class StatsFragment extends Fragment implements LoaderManager.LoaderCallb
 
     Uri currentUri;
     PushupList pushupList;
+
+    Random random;
+    int randomQuoteNumber;
 
     @BindView(R.id.pushup_spinner)
     Spinner spinner;
@@ -69,6 +81,8 @@ public class StatsFragment extends Fragment implements LoaderManager.LoaderCallb
     TextView recordValue;
     @BindView(R.id.stats_personal_attempt_value)
     TextView attemptValue;
+    @BindView(R.id.random_quote)
+    TextView randomQuote;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,7 +125,41 @@ public class StatsFragment extends Fragment implements LoaderManager.LoaderCallb
         });
         getLoaderManager().initLoader(STATS_LOADER_ID, null, this);
 
+        //Quote
+        if (isNetworkAvailable()) {
+            getQuoteFrom();
+            random = new Random();
+        } else {
+            randomQuote.setVisibility(View.GONE);
+        }
+
         return rootView;
+    }
+
+    public void getQuoteFrom() {
+        Log.d(TAG, "getQuoteFrom: RUNNING QUOTE");
+        QuoteAPI.Factory.getInstance().getPushup().enqueue(new Callback<List<PushupQuote>>() {
+            @Override
+            public void onResponse(Call<List<PushupQuote>> call, Response<List<PushupQuote>> response) {
+
+                int randomQuoteNumber = response.body().size();
+                String quote = response.body().get(random.nextInt(randomQuoteNumber)).getQuoteText();
+                randomQuote.setText(String.valueOf(quote));
+            }
+
+            @Override
+            public void onFailure(Call<List<PushupQuote>> call, Throwable t) {
+                Log.e("Failed", t.getMessage());
+            }
+        });
+
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityMgr = (ConnectivityManager) getContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityMgr.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     public void resetLoader() {
@@ -182,7 +230,7 @@ public class StatsFragment extends Fragment implements LoaderManager.LoaderCallb
             }
         }
 
-        barDataSet = new BarDataSet(barEntries, "Projects");
+        barDataSet = new BarDataSet(barEntries, getString(R.string.project));
         barData = new BarData(barDataSet);
 
         barDataSet.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
@@ -228,8 +276,5 @@ public class StatsFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         currentScore.clear();
-        Log.d(TAG, "onLoadFinished: LIST SIZE NEW " + currentScore.size());
     }
-
-
 }

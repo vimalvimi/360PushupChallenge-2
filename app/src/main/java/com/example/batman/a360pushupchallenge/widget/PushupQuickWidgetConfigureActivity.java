@@ -10,7 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.example.batman.a360pushupchallenge.R;
@@ -20,14 +19,9 @@ import com.example.batman.a360pushupchallenge.model.Pushup;
 
 import java.util.ArrayList;
 
-/**
- * The configuration screen for the {@link PushupQuickWidget PushupQuickWidget} AppWidget.
- */
 public class PushupQuickWidgetConfigureActivity
         extends Activity
         implements PushupAdapterWidget.ClickListener {
-
-    private static final String TAG = "PushupQuickWidgetConfig";
 
     private static final String PREFS_NAME = "com.example.batman.a360pushupchallenge.widget.PushupQuickWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";
@@ -110,7 +104,6 @@ public class PushupQuickWidgetConfigureActivity
     @Override
     public void itemClicked(View view, int position) {
 
-        Log.d(TAG, "itemClicked: IN CONFIG" + position);
         final Context context = PushupQuickWidgetConfigureActivity.this;
 
         PushupList pushupList = new PushupList();
