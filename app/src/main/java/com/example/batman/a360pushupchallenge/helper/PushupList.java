@@ -102,41 +102,72 @@ public class PushupList {
         }
     }
 
+    public int getDrawable(String lastPath) {
+        switch (lastPath) {
+            case PushupContract.PATH_PUSHUP_KNEE:
+                return R.drawable.knee;
+            case PushupContract.PATH_PUSHUP_CLASSIC:
+                return R.drawable.classic;
+            case PushupContract.PATH_PUSHUP_WIDE_GRIP:
+                return R.drawable.wide_grip;
+            case PushupContract.PATH_PUSHUP_CLOSED_GRIP:
+                return R.drawable.closed_grip;
+            case PushupContract.PATH_PUSHUP_STACKED:
+                return R.drawable.stacked;
+            case PushupContract.PATH_PUSHUP_RAISED_LEG:
+                return R.drawable.raised_leg;
+            case PushupContract.PATH_PUSHUP_REVERSED:
+                return R.drawable.reversed;
+            case PushupContract.PATH_PUSHUP_DECLINE:
+                return R.drawable.decline;
+            case PushupContract.PATH_PUSHUP_INCLINE:
+                return R.drawable.incline;
+            case PushupContract.PATH_PUSHUP_KNUCKLE:
+                return R.drawable.knuckle;
+            case PushupContract.PATH_PUSHUP_CLAPPING:
+                return R.drawable.clapping;
+            case PushupContract.PATH_PUSHUP_ONE_ARMED:
+                return R.drawable.one_armed;
+            default:
+                return R.drawable.knee;
+        }
+    }
+
     public void preparePushup(ArrayList<Pushup> pushupArrayList) {
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_KNEE,
-                PushupContract.PATH_PUSHUP_KNEE, R.drawable.p1, 0));
+                PushupContract.PATH_PUSHUP_KNEE, R.drawable.knee, 0));
 
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_CLASSIC,
-                PushupContract.PATH_PUSHUP_CLASSIC, R.drawable.p2, 0));
+                PushupContract.PATH_PUSHUP_CLASSIC, R.drawable.classic, 0));
 
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_WIDE_GRIP,
-                PushupContract.PATH_PUSHUP_WIDE_GRIP, R.drawable.p3, 0));
+                PushupContract.PATH_PUSHUP_WIDE_GRIP, R.drawable.wide_grip, 0));
 
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_CLOSED_GRIP,
-                PushupContract.PATH_PUSHUP_CLOSED_GRIP, R.drawable.p4, 0));
+                PushupContract.PATH_PUSHUP_CLOSED_GRIP, R.drawable.closed_grip, 0));
 
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_STACKED,
-                PushupContract.PATH_PUSHUP_STACKED, R.drawable.p5, 0));
+                PushupContract.PATH_PUSHUP_STACKED, R.drawable.stacked, 0));
 
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_RAISED_LEG,
-                PushupContract.PATH_PUSHUP_RAISED_LEG, R.drawable.p6, 0));
+                PushupContract.PATH_PUSHUP_RAISED_LEG, R.drawable.raised_leg, 0));
 
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_REVERSED,
-                PushupContract.PATH_PUSHUP_REVERSED, R.drawable.p7, 0));
+                PushupContract.PATH_PUSHUP_REVERSED, R.drawable.reversed, 0));
 
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_DECLINE,
-                PushupContract.PATH_PUSHUP_DECLINE, R.drawable.p8, 0));
+                PushupContract.PATH_PUSHUP_DECLINE, R.drawable.decline, 0));
 
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_INCLINE,
-                PushupContract.PATH_PUSHUP_INCLINE, R.drawable.p9, 0));
+                PushupContract.PATH_PUSHUP_INCLINE, R.drawable.incline, 0));
 
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_KNUCKLE,
-                PushupContract.PATH_PUSHUP_KNUCKLE, R.drawable.p10, 0));
+                PushupContract.PATH_PUSHUP_KNUCKLE, R.drawable.knuckle, 0));
 
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_CLAPPING,
-                PushupContract.PATH_PUSHUP_CLAPPING, R.drawable.p11, 0));
+                PushupContract.PATH_PUSHUP_CLAPPING, R.drawable.clapping, 0));
 
         pushupArrayList.add(new Pushup(PushupContract.NAME_PUSHUP_ONE_ARMED,
-                PushupContract.PATH_PUSHUP_ONE_ARMED, R.drawable.p12, 0));
+                PushupContract.PATH_PUSHUP_ONE_ARMED, R.drawable.one_armed, 0));
     }
 }

@@ -20,8 +20,8 @@ public class PushupContract {
     public static final String NAME_PUSHUP_KNUCKLE = "Knuckle";
     public static final String NAME_PUSHUP_CLAPPING = "Clapping";
     public static final String NAME_PUSHUP_ONE_ARMED = "One Armed";
-    public static final String PATH_PUSHUP_KNEE = "knee";
 
+    public static final String PATH_PUSHUP_KNEE = "knee";
     public static final String PATH_PUSHUP_CLASSIC = "classic";
     public static final String PATH_PUSHUP_WIDE_GRIP = "wide_grip";
     public static final String PATH_PUSHUP_CLOSED_GRIP = "closed_grip";

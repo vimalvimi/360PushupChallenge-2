@@ -128,7 +128,6 @@ public class StatsFragment extends Fragment implements LoaderManager.LoaderCallb
         //Quote
         if (isNetworkAvailable()) {
             getQuoteFrom();
-            random = new Random();
         } else {
             randomQuote.setVisibility(View.GONE);
         }
@@ -137,13 +136,17 @@ public class StatsFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     public void getQuoteFrom() {
+
+        random = new Random();
+        randomQuoteNumber = random.nextInt();
+
         Log.d(TAG, "getQuoteFrom: RUNNING QUOTE");
         QuoteAPI.Factory.getInstance().getPushup().enqueue(new Callback<List<PushupQuote>>() {
             @Override
             public void onResponse(Call<List<PushupQuote>> call, Response<List<PushupQuote>> response) {
 
-                int randomQuoteNumber = response.body().size();
-                String quote = response.body().get(random.nextInt(randomQuoteNumber)).getQuoteText();
+                int randomQuoteNumberSize = response.body().size();
+                String quote = response.body().get(random.nextInt(randomQuoteNumberSize)).getQuoteText();
                 randomQuote.setText(String.valueOf(quote));
             }
 

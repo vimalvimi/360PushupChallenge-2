@@ -1,5 +1,6 @@
 package com.example.batman.a360pushupchallenge.ui;
 
+import android.animation.ValueAnimator;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,6 +12,9 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -117,25 +121,61 @@ public class CounterActivity
         getSupportLoaderManager().initLoader(PUSHUP_LOADER, null, this);
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_counter, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_info:
+                Intent intent = new Intent(CounterActivity.this, PopUp.class);
+                intent.putExtra(getString(R.string.pushup_name_preview), pushupLastPath);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void pushupCounter() {
         livePushupCounter++;
         counterButton.setText(String.valueOf(livePushupCounter));
+
+        final float startSize = 120; // Size in pixels
+        final float endSize = 112;
+        final int animationDuration = 300;
+
+        ValueAnimator animator = ValueAnimator.ofFloat(startSize, endSize);
+        animator.setDuration(animationDuration);
 
         //If it hits multiple of 10 then sound 2
         if (livePushupCounter % 10 == 0) {
             if (mediaPlayer10 != null) {
                 mediaPlayer10.start();
             }
+
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    float animatedValue = (float) valueAnimator.getAnimatedValue();
+                    counterButton.setTextSize(animatedValue);
+                }
+            });
+
+            animator.start();
         } else {
             if (mediaPlayer != null) {
                 mediaPlayer.start();
             }
+            counterButton.setTextColor(getResources().getColor(R.color.dark_text));
         }
 
         //Push that record
         if (recordInt > 0) {
             if (0 <= (recordInt - livePushupCounter) && (recordInt - livePushupCounter) <= 5) {
-                String motivationText = (recordInt + 1) - livePushupCounter + getString(R.string.record_broke_pre_text);
+                String motivationText = (recordInt + 1) - livePushupCounter + " " + getString(R.string.record_broke_pre_text);
                 counterTogo.setVisibility(View.VISIBLE);
                 counterTogo.setText(motivationText);
             } else if (recordInt < livePushupCounter) {
@@ -220,24 +260,33 @@ public class CounterActivity
 
     @Override
     protected void onPause() {
+        super.onPause();
         mediaPlayer.stop();
         mediaPlayer10.stop();
         mediaPlayer.release();
         mediaPlayer10.release();
-        super.onPause();
     }
 
     private void ProgressShare() {
+
+        String pushup;
+
+        if (livePushupCounter == 1) {
+            pushup = getString(R.string.push_up);
+        } else {
+            pushup = getString(R.string.push_ups);
+        }
+
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType(getString(R.string.text_type_intent_share));
         shareIntent.putExtra(Intent.EXTRA_TEXT,
-                getString(R.string.share_text_prefix) + livePushupCounter + " " + pushupName +
+                getString(R.string.share_text_prefix) + " " + livePushupCounter + " " + pushupName +
                         getString(R.string.app_tag));
 
         try {
             startActivity(Intent.createChooser(shareIntent,
-                    getString(R.string.share_text_prefix) + livePushupCounter + " " + pushupName +
-                            getString(R.string.push_up) + getString(R.string.app_tag)));
+                    getString(R.string.share_text_prefix) + " " + livePushupCounter + " " + pushupName + " " +
+                            pushup + getString(R.string.app_tag)));
         } catch (android.content.ActivityNotFoundException ex) {
             ex.printStackTrace();
         }
